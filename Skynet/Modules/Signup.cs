@@ -31,7 +31,6 @@ namespace Skynet.Modules
                         DiscordName = Context.User.ToString(),
                         TwitchName = twitch,
                         Mention = MentionLevel.None,
-                        LastUpdate = "",
                         Streaming = false
                     };
                     server.StreamerList.Add(newStreamer);
