@@ -16,6 +16,13 @@ namespace Skynet.Modules
             switch (option.ToLower())
             {
                 case "add":
+                    if (server.StreamerList.FirstOrDefault(x => x.DiscordId == Context.User.Id) != null)
+                    {
+                        BotFrame.EmbedWriter(Context.Channel, Context.User,
+                            "Skynet",
+                            $"Sorry but Skynet is already watching you", time: -1);
+                        return;
+                    }
                     Streamer newStreamer = new Streamer()
                     {
                         AutoPost = false,
@@ -34,6 +41,13 @@ namespace Skynet.Modules
                         $"Skynet is now watching {Context.User.Mention}", time: -1);
                     break;
                 case "remove":
+                    if (server.StreamerList.FirstOrDefault(x => x.DiscordId == Context.User.Id) == null)
+                    {
+                        BotFrame.EmbedWriter(Context.Channel, Context.User,
+                            "Skynet",
+                            $"Sorry but Skynet is not watching you yet", time: -1);
+                        return;
+                    }
                     var streamRole = Context.Guild.Roles.FirstOrDefault(x => x.Id == server.StreamingRole);
                     var user = Context.Guild.Users.FirstOrDefault(x => x.Id == Context.User.Id);
                     if (user.Roles.Contains(streamRole))
