@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Skynet"
         mc:Ignorable="d"
-        Title="StreamerEditor" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Icon="Prompt.ico">
+        Title="StreamerEditor" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Loaded="WPF_Loaded" Icon="Prompt.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
