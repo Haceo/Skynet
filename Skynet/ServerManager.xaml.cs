@@ -98,6 +98,7 @@ namespace Skynet
                 _server.StreamingRole = streamerRole;
             else
                 _server.StreamingRole = 0;
+            BotFrame.SaveFile("servers");
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {
