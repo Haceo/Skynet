@@ -19,8 +19,30 @@ namespace Skynet
             _service = new CommandService();
             await _service.AddModulesAsync(Assembly.GetEntryAssembly(), null);
             _client.JoinedGuild += JoinedGuildHandler;
+            _client.UserJoined += UserJoinedHandler;
             _client.ReactionAdded += ReactionAddedHandler;
             _client.MessageReceived += MessageReceivedHandler;
+        }
+
+        private async Task UserJoinedHandler(SocketGuildUser u)
+        {
+            if (u == null)
+                return;
+            var server = _main.ServerList.FirstOrDefault(x => x.ServerId == u.Guild.Id);
+            if (u.IsBot)
+                return;
+            if (server.NewUserRole != 0)
+            {
+                try
+                {
+                    await u.AddRoleAsync(u.Guild.Roles.FirstOrDefault(x => x.Id == server.NewUserRole));
+                }
+                catch (Exception ex)
+                {
+                    BotFrame.consoleOut(ex.Message);
+                    return;
+                }
+            }
         }
 
         private async Task JoinedGuildHandler(SocketGuild guild)
