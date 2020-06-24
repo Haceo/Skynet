@@ -27,7 +27,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ListView Name="streamerListBox" Grid.Row="0" Grid.ColumnSpan="99" Margin="3" ItemsSource="{Binding StreamerList}">
+                    <ListView Name="streamerListBox" Grid.Row="0" Grid.ColumnSpan="99" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="3" ItemsSource="{Binding StreamerList}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn>
@@ -63,7 +63,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ListView Name="reactionListBox" Grid.Row="0" Grid.ColumnSpan="99" Margin="3" ItemsSource="{Binding ReactionLockList}">
+                    <ListView Name="reactionListBox" Grid.Row="0" Grid.ColumnSpan="99" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="3" ItemsSource="{Binding ReactionLockList}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Channel ID" DisplayMemberBinding="{Binding ChannelId}"/>
