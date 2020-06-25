@@ -117,7 +117,9 @@ namespace Skynet
             if (BotFrame.config.TwitchClientId != null)
                 tp.twitchClientIdBox.Text = BotFrame.config.TwitchClientId;
             tp.Owner = this;
+            IsEnabled = false;
             tp.ShowDialog();
+            IsEnabled = true;
             if (tp.DialogResult.HasValue && tp.DialogResult.Value)
             {
                 BotFrame.config.DiscordToken = tp.discordTokenBox.Text;
@@ -149,9 +151,7 @@ namespace Skynet
         }
         private void ServerManage_Click(object sender, RoutedEventArgs e)
         {
-            if (_client == null)
-                return;
-            if (serverListBox.SelectedIndex == -1)
+            if (_client == null || serverListBox.SelectedIndex == -1)
                 return;
             ServerManager sm = new ServerManager();
             sm.Owner = this;
@@ -167,7 +167,9 @@ namespace Skynet
                 bi.EndInit();
                 sm.Icon = bi;
             }
+            Visibility = Visibility.Hidden;
             sm.ShowDialog();
+            Visibility = Visibility.Visible;
             sm = null;
         }
         //Connection

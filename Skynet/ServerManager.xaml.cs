@@ -111,7 +111,9 @@ namespace Skynet
             se.Owner = this;
             se.Title = "New Streamer";
             se.mentionLevelComboBox.SelectedItem = MentionLevel.None;
+            IsEnabled = false;
             se.ShowDialog();
+            IsEnabled = true;
             if (se.DialogResult.HasValue && se.DialogResult.Value)
             {
                 if (_server.StreamerList.FirstOrDefault(x => x.DiscordId == ulong.Parse(se.discordIdBox.Text) || x.TwitchName == se.twitchNameBox.Text) != null)
@@ -138,11 +140,15 @@ namespace Skynet
         }
         private void StreamersEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (streamerListBox.SelectedIndex == -1)
+                return;
             StreamerEditor se = new StreamerEditor();
             se.Owner = this;
             se._streamer = _server.StreamerList[streamerListBox.SelectedIndex];
             se.Title = $"Edit Streamer {se._streamer.DiscordName}";
+            IsEnabled = false;
             se.ShowDialog();
+            IsEnabled = true;
             if (se.DialogResult.HasValue && se.DialogResult.Value)
             {
                 se._streamer.DiscordId = ulong.Parse(se.discordIdBox.Text);
@@ -157,7 +163,11 @@ namespace Skynet
         }
         private void StreamersDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (streamerListBox.SelectedIndex == -1)
+                return;
+            IsEnabled = false;
             var res = MessageBox.Show("Are you sure you want to remove this item?", "Delete?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            IsEnabled = true;
             if (res == MessageBoxResult.No)
                 return;
             _server.StreamerList.Remove(_server.StreamerList[streamerListBox.SelectedIndex]);
@@ -170,7 +180,9 @@ namespace Skynet
             ReactionLockEditor rl = new ReactionLockEditor();
             rl.Owner = this;
             rl.Title = "New Reaction Lock";
+            IsEnabled = false;
             rl.ShowDialog();
+            IsEnabled = true;
             if (rl.DialogResult.HasValue && rl.DialogResult.Value)
             {
                 if (_server.ReactionLockList.FirstOrDefault(x => x.ChannelId == ulong.Parse(rl.channelBox.Text) && x.MessageId == ulong.Parse(rl.messageBox.Text)) != null)
@@ -195,11 +207,15 @@ namespace Skynet
         }
         private void ReactionLocksEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (reactionListBox.SelectedIndex == -1)
+                return;
             ReactionLockEditor rl = new ReactionLockEditor();
             rl.Owner = this;
             rl._lock = _server.ReactionLockList[reactionListBox.SelectedIndex];
             rl.Title = $"Edit lock {rl._lock.MessageId}";
+            IsEnabled = false;
             rl.ShowDialog();
+            IsEnabled = true;
             if (rl.DialogResult.HasValue && rl.DialogResult.Value)
             {
                 rl._lock.ChannelId = ulong.Parse(rl.channelBox.Text);
@@ -213,7 +229,11 @@ namespace Skynet
         }
         private void ReactionLocksDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (reactionListBox.SelectedIndex == -1)
+                return;
+            IsEnabled = false;
             var res = MessageBox.Show("Are you sure you want to remove this item?", "Delete?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            IsEnabled = true;
             if (res == MessageBoxResult.No)
                 return;
             _server.ReactionLockList.Remove(_server.ReactionLockList[reactionListBox.SelectedIndex]);
