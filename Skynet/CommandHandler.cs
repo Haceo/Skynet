@@ -20,8 +20,20 @@ namespace Skynet
             await _service.AddModulesAsync(Assembly.GetEntryAssembly(), null);
             _client.JoinedGuild += JoinedGuildHandler;
             _client.UserJoined += UserJoinedHandler;
+            _client.UserLeft += UserLeaveHandler;
             _client.ReactionAdded += ReactionAddedHandler;
             _client.MessageReceived += MessageReceivedHandler;
+        }
+
+        private async Task UserLeaveHandler(SocketGuildUser u)
+        {
+            var server = _main.ServerList.FirstOrDefault(x => x.ServerId == u.Guild.Id);
+            var streamer = server.StreamerList.FirstOrDefault(x => x.DiscordId == u.Id);
+            if (streamer != null)
+            {
+                server.StreamerList.Remove(streamer);
+                BotFrame.SaveFile("servers");
+            }
         }
 
         private async Task UserJoinedHandler(SocketGuildUser u)
