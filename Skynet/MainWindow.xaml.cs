@@ -192,13 +192,14 @@ namespace Skynet
                 LogLevel = LogSeverity.Verbose
             });
             _client.Log += Log;
+            _client.Connected += _client_Connected;
+            _client.Disconnected += _client_Disconnected;
             await _client.LoginAsync(TokenType.Bot, BotFrame.config.DiscordToken);
             await _client.StartAsync();
             _handler = new CommandHandler();
             await _handler.InitAsync(_client);
             _api.Settings.ClientId = BotFrame.config.TwitchClientId;
             _api.Settings.AccessToken = BotFrame.config.TwitchToken;
-            connectionLight.Fill = Brushes.Green;
             await Task.Delay(2000);
             await ServerCheck();
             connectionButton.Content = "Connected!";
@@ -206,6 +207,26 @@ namespace Skynet
             _timer.Enabled = true;
             await Task.Delay(-1);
         }
+
+        private Task _client_Connected()
+        {
+            App.Current.Dispatcher.Invoke((Action)delegate
+            {
+                connectionLight.Fill = Brushes.Green;
+            });
+            return Task.CompletedTask;
+        }
+
+        private Task _client_Disconnected(Exception arg)
+        {
+            App.Current.Dispatcher.Invoke((Action)delegate
+            {
+                connectionLight.Fill = Brushes.Red;
+            });
+            return Task.CompletedTask;
+        }
+
+
         private async Task Disconnect()
         {
             if (_client == null)
@@ -214,7 +235,6 @@ namespace Skynet
             await _client.StopAsync();
             await _client.LogoutAsync();
             _client.Dispose();
-            connectionLight.Fill = Brushes.Red;
             connectionButton.Content = "Disconnected!";
             serverTab.Visibility = Visibility.Collapsed;
             _timer.Enabled = false;
