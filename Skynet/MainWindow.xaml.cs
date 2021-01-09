@@ -189,7 +189,8 @@ namespace Skynet
             _client = new DiscordSocketClient(new DiscordSocketConfig
             {
                 ExclusiveBulkDelete = true,
-                LogLevel = LogSeverity.Verbose
+                LogLevel = LogSeverity.Verbose,
+                AlwaysDownloadUsers = true
             });
             _client.Log += Log;
             _client.Connected += _client_Connected;
